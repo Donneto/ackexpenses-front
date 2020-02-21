@@ -1,6 +1,6 @@
 import React from 'react';
 
-const summary = (props) => {
+const summary = () => {
   return(
     <nav className="level">
       <div className="level-item has-text-centered">
