@@ -20,7 +20,9 @@
   "homepage": "https://github.com/Donneto/ackexpenses-front#readme",
   "dependencies": {
     "@babel/preset-react": "^7.8.3",
+    "@fortawesome/fontawesome-free": "^5.12.1",
     "@hapi/joi": "^17.1.0",
+    "@mdi/font": "^4.9.95",
     "babel-eslint": "^10.0.3",
     "bulma": "^0.8.0",
     "confidence": "^4.0.2",
