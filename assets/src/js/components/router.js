@@ -8,6 +8,7 @@ import {
 
 // Custom
 import Home from '../views/home.js';
+import Footer from './footer';
 
 const appRouter = () => {
   return (
@@ -18,6 +19,7 @@ const appRouter = () => {
             <Home />
           </Route>
         </Switch>
+        <Footer />
       </div>
     </Router>
   );
