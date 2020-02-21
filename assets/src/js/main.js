@@ -3,22 +3,19 @@ import '../scss/master.scss';
 // Dependencies
 import React from 'react';
 import { render } from 'react-dom';
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link
-// } from 'react-router-dom';
+import './config';
 
-class App extends React.Component {
+// custom
+import Router from './components/router';
+
+class Expenses extends React.Component {
 
   render() {
-    const name = 'adolfo';
 
     return (
-      <h1>Hello, {name}</h1>
+      <Router />
     );
   }
 }
 
-render(<App />, document.getElementById('app'));
+render(<Expenses />, document.getElementById('app'));
