@@ -12,7 +12,6 @@ const internals = {
 
 const config = {
     mode: 'production',
-    devtool: 'hidden-source-map',
     entry: `${ internals.src }/js/main.js`,
     output: {
         filename: '[name].js',

@@ -6,11 +6,16 @@ import config from 'react-global-configuration';
 
 
 // Custom
-import Summary from '../components/summary';
-import Actions from '../components/actions';
-import DataTable from '../components/dataTable';
+import Summary from '../components/transaction/summary';
+import DataTable from '../components/transaction/dataTable';
 import Spinner from '../components/spinner';
+import TransactionForm from '../components/transaction/transactionForm';
+import AppNavigator from '../components/transaction/navigator';
 
+// Internals
+const internals = {
+  API_URL: config.get('app.apiURL')
+};
 
 class Home extends React.Component {
   constructor(props) {
@@ -20,21 +25,25 @@ class Home extends React.Component {
       startDate: moment(),
       endDate: moment(),
       showLoading: false,
+      categories: [],
       data: {
         income: 0,
         expense: 0,
         docs: []
-      }
+      },
+      editMode: false
     };
 
     this._updateDates = this._updateDates.bind(this);
     this._getDataForDates = this._getDataForDates.bind(this);
     this._showSpinner = this._showSpinner.bind(this);
     this._deleteTransaction = this._deleteTransaction.bind(this);
+    this._getCategories = this._getCategories.bind(this);
   }
 
   componentDidMount() {
     this._getDataForDates();
+    this._getCategories();
   }
 
   _updateDates(stDate = this.state.startDate, edDate = this.state.endDate) {
@@ -65,18 +74,40 @@ class Home extends React.Component {
     }
   }
 
-  async _getDataForDates() {
+  async _getCategories() {
+    let response;
 
+    let { categories } = this.state;
+
+    const API_ROUTE = `${internals.API_URL}/category`;
+
+    try {
+      response = await axios.get(API_ROUTE);
+      const { status, data } = response.data;
+
+      if (status === 'success') {
+        categories = data;
+        this.setState({ categories });
+      }
+
+    } catch(e) {
+      throw e;
+    }
+  }
+
+  async _getDataForDates() {
+    let { data } = this.state;
     const { startDate, endDate } = this.state;
     const END_DATE_FORMATED = moment(endDate).format('YYYY-MM-DD');
     const START_DATE_FORMATED = moment(startDate).format('YYYY-MM-DD');
-    const API_URL = config.get('app.apiURL');
-    const API_ROUTE = `${API_URL}/transaction/get/from/${START_DATE_FORMATED}/to/${END_DATE_FORMATED}`;
+
+    const API_ROUTE = `${internals.API_URL}/transaction/get/from/${START_DATE_FORMATED}/to/${END_DATE_FORMATED}`;
+
+    let response;
 
     try {
       this._showSpinner(true);
-      let { data } = this.state;
-      const response = await axios.get(API_ROUTE);
+      response = await axios.get(API_ROUTE);
       const { status, data: responseData } = response.data;
 
       if (status === 'success') {
@@ -94,8 +125,9 @@ class Home extends React.Component {
     this.setState({ showLoading: visible });
   }
 
+
   render() {
-    const { startDate, endDate, showLoading, data } = this.state;
+    const { startDate, endDate, showLoading, data, categories, editMode } = this.state;
 
     return(
       <div>
@@ -104,9 +136,12 @@ class Home extends React.Component {
         <div className="columns is-centered">
           <div className="column is-three-fifths box is-clearfix">
             <Summary startDate={startDate} endDate={endDate} updateDates={this._updateDates} income={data.income} expense={data.expense}/>
-            <Actions/>
             {showLoading && <Spinner/>}
-            <DataTable key={data.docs.length} data={data.docs} deleteTransaction={this._deleteTransaction} />
+            <AppNavigator />
+            <DataTable key={data.docs.length} data={data.docs} deleteTransaction={this._deleteTransaction}  />
+          </div>
+          <div className="column is-one-quarter">
+            {!editMode && <TransactionForm categories={ categories } refreshData={this._getDataForDates} />}
           </div>
         </div>
       </div>

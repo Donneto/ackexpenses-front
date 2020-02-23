@@ -7,7 +7,8 @@ import {
 } from 'react-router-dom';
 
 // Custom
-import Home from '../views/home.js';
+import Home from '../views/home';
+import Category from '../views/category';
 import Footer from './footer';
 
 const appRouter = () => {
@@ -15,6 +16,9 @@ const appRouter = () => {
     <Router>
       <div>
         <Switch>
+          <Route path="/category">
+            <Category />
+          </Route>
           <Route path="/">
             <Home />
           </Route>

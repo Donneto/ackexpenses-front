@@ -1,6 +1,5 @@
 @charset 'utf-8';
-
-$table-cell-padding : .3em .3em;
+@import 'includes/theme';
 @import '~bulma';
 @import '~react-dates/lib/css/_datepicker.css';
 @import 'includes/react_dates_overrides';
