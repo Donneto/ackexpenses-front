@@ -49,7 +49,7 @@ class Summary extends React.Component {
         <nav className="level">
           <div className="level-item has-text-centered">
             <div>
-              <p className="heading">Date</p>
+              <p className="heading">Choose Date</p>
               <DateRangePicker
                 startDate={this.state.startDate}
                 required={true}

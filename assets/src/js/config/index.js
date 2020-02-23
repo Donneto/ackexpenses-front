@@ -8,7 +8,7 @@ const internals = {
 
 // Env Check
 if( internals.env !== 'dev') {
-  internals.apiURL = 'undeterminedAPIURL';
+  internals.apiURL = 'https://acklen-coding-test.herokuapp.com';
 }
 
 internals.init = () => {
