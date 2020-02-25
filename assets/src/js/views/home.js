@@ -52,7 +52,7 @@ class Home extends React.Component {
     startDate = stDate;
     endDate = edDate;
 
-    this.setState({ startDate, endDate }, () => this._getDataForDates());
+    this.setState({ startDate, endDate }, () => this._getDataForDates() );
   }
 
   async _deleteTransaction(id) {

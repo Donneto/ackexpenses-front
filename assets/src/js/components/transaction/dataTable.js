@@ -26,7 +26,6 @@ class DataTable extends React.Component {
           <td><span className={incomeLabel}><small><b>{_formatMoney(item.amount)}</b></small></span></td>
           <td>
             <button className="button is-small is-danger is-outlined" onClick={ () => deleteTransaction(item._id) }><span className="icon is-large"><i className="mdi mdi-delete-forever mdi-18px"/></span> </button>
-            <button className="button is-small is-info is-outlined"><span className="icon is-large"><i className="mdi mdi-pencil mdi-18px"/></span></button>
           </td>
         </tr>);
       })}

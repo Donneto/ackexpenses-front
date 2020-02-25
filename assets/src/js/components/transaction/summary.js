@@ -7,15 +7,20 @@ import moment from 'moment';
 // custom
 import { _formatMoney } from '../../utils';
 
+const internals = {
+  shouldUpdate: false,
+  startDate: moment(),
+  endDate: moment()
+};
+
 class Summary extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      startDate: props.startDate,
-      endDate: props.endDate,
+      startDate: internals.startDate,
+      endDate: internals.endDate,
       focusedInput: null,
-      requiresDataPull: false
     };
 
     this._updateDates = this._updateDates.bind(this);
@@ -23,21 +28,22 @@ class Summary extends React.Component {
   }
 
   _updateDates(stDate = null, edDate = null) {
-    let shouldPullData = false;
     const { startDate, endDate } = this.state;
     const dateStart = (stDate === null) ? startDate : stDate;
     const dateEnd = (edDate === null) ? endDate : edDate;
 
     if (moment(startDate).format('MM-DD-YYYY') !== moment(dateStart).format('MM-DD-YYYY') || moment(endDate).format('MM-DD-YYYY') !== moment(dateEnd).format('MM-DD-YYYY')) {
-      shouldPullData = true;
+      internals.shouldUpdate = true;
     }
 
-    this.setState({ startDate: dateStart, endDate: dateEnd,  requiresDataPull: shouldPullData });
+    this.setState({ startDate: dateStart, endDate: dateEnd });
   }
 
   _drpClose() {
-    if (this.state.requiresDataPull) {
-      this.setState({ requiresDataPull: false}, () => this.props.updateDates(this.state.startDate, this.state.endDate));
+
+    if (internals.shouldUpdate) {
+      this.props.updateDates(this.state.startDate, this.state.endDate);
+      internals.shouldUpdate = false;
     }
   }
 
@@ -65,7 +71,7 @@ class Summary extends React.Component {
                 readOnly={true}
                 withPortal={true}
                 minimumNights={0}
-                onClose={ () => this._drpClose() }
+                onClose= { () => this._drpClose() }
                 isOutsideRange={ function noRefCheck() {} }
               />
             </div>
