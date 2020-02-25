@@ -46,6 +46,7 @@ class DataTable extends React.Component {
             </tr>
           </thead>
           <tfoot>
+            <tr><td colSpan="7"><p><small><b>Note:</b> The API i hosted on a free tier of Heroku. Heroku Dynos (on this tier) go to sleep after a time without inactivity. <b>Please, give it a few seconds for the dyno to start.</b></small></p></td></tr>
             <tr>
               <td colSpan="7"><br/><h3 className="title is-5 has-text-centered"> <span className="icon"><i className="mdi mdi-table"/></span> </h3></td>
             </tr>
